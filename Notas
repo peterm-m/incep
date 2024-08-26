@@ -1,6 +1,6 @@
 
 ############################################################
-#									DOCKER                                   #
+#                 DOCKER                                   #
 ############################################################
 
 Docker daemon: dockerd
@@ -19,10 +19,16 @@ Docker desktop:
 
 Docker registries:
 	Almacena docker images.
-	Docker Hub  es public registry donde Docker busca por defecto
+	Docker Hub  es public registry donde Docker
+	
+	 busca por defecto
 	Al ejecutar comandos como docker pull o docker run  
 	Docker pulls las imagenes requeridas del registry configurado
 	con Docker push, docker push tu imagen
+
+	Registro vs repositorio
+		registro: ubicacion centralizada que almacena y administra imagenes de contenedores
+		repositorio: coleccion de imagenes de contenedores rela
 
 Docker objects:
 	Images:
@@ -57,6 +63,16 @@ Docker objects:
 	Volumes:
 	Plugins:
 	other:
+
+puntos clave de los  contenedores:
+	- Son autonomos y tienen todo lo necesario para funcionar las dependencias de la maquina host
+	- Estan aislados y se ejecutan de forman aislada 
+	- Independiente, cada contenedor se administra de forma independiente. LA eliminación de uno no afecta al resto
+	- Portatil, los contenedores pueden desplegarse en cualquier plataforma con docker.
+
+Hay dos principios de las imagenes
+	Son inmotables, una vez creadas no pueden modificarse, solo se puede crear una nueva
+	Las imagenes se componen de capas, cada una representa una cinjunto de comabios  hello 
 
 Docker file syntax:
 	https://docs.docker.com/reference/dockerfile/
