@@ -1,0 +1,19 @@
+name:  inception
+
+services:
+  nginx:
+    build: ./requirements/nginx
+
+  mariadb:
+    build: ./requirements/mariadb
+    volumes:
+      - DB:/home/pedromar/data
+
+  wordpress:
+    build: ./requirements/wordpress
+    volumes:
+      - WordPress:/home/pedromar/data
+
+volumes:
+  DB:
+  WordPress:
