@@ -2,6 +2,8 @@ name:  inception
 
 services:
   nginx:
+    ports:
+        - "8080:80"
     build: ./requirements/nginx
 
   mariadb:
@@ -17,3 +19,5 @@ services:
 volumes:
   DB:
   WordPress:
+
+
