@@ -1,0 +1,43 @@
+En el proceso de boot se distinguen 5 fases :
+1. hadware bios y firewall
+2. os loader con grub
+3. kernel
+	When the kernel is loaded, it initializes various components of the computer and operating system
+	each portion of software responsible for such a task is usually consider "a driver" for the applicable component
+	The kernel starts the virtual memory swapper process 'kswapd'
+	Mounts some filesystem at the root path, /
+	The kernel create the initial userland process PID 1 this process executes the program /sbin/init
+4. root user-sapce process
+5. boot scrits
+
+
+Elementos de un servicio:
+
+Ejecutables, bibliotecas y otros, ficheros
+	/usr/bin:/usr/lib:/share
+	Son los f​icheros ejecutables y bibliotecas​ que se depositan en esos directorios cuando se instala el servicio.
+Proceso o demonio
+	en memoria
+	Es el servicio en sí. Se trata de uno o varios ​procesos en ejecución​ que sostienen, ofrecen o implementan algún servicio. Si el servicio está activo es porque el proceso correspondiente está en ejecución
+
+Fichero de Configuración
+	/etc/
+	Generalmente todos los servicios tienen un fichero de configuración. La configuración se deposita en ​/etc siempre. En ocasiones existe también un directorio dentro de /etc.
+
+Socket
+	Los servicios se comunican con procesos, dispositivos o computadores remotos. Se establecen canales de comunicación según el tipo de servicio. Estos canales de comunicación ​se conocen como sockets​.
+
+pid files
+	/run
+		Ficheros simples, cuyo ​contenido es el PID​ del proceso del servicio. Esto reporta algunos b eneficios​: 
+		● Se puede identificar el servicio 
+		● El mismo servicio puede comprobar si una instancia anterior terminó mal 
+		● El administrador puede matar fácilmente el servicio con k ill -s SIGKILL
+
+Ficheros de datos
+	/var:/srv
+	Algunos servicios están basados en gestionar datos. Por ejemplo, un servidor de BBDD o servidor WEB. Estos ficheros deben residir en algún directorio bien establecido por la configuración del servicio
+
+.lock files
+	/run
+	En algunos casos, para evitar que por error se lancen dos procesos del mismo servicio, el primero en ser lanzado crea un fichero de cierre (lock) y el segundo, al intentar hacer lo mismo, se encuentra con el fichero ya creado. Esto le hace ver que ya está el servicio en marcha y por tanto el segundo cesa su ejecución
