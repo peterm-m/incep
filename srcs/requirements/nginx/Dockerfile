@@ -1,10 +1,9 @@
 FROM debian:bullseye
 
-RUN apt update
-RUN apt install -y nginx openssl
+RUN apt update && \
+	apt install -y nginx openssl
 
-COPY ./tools/conf.sh .
+COPY ./conf/default /etc/nginx/sites-available/
+COPY ./tools/conf_nginx.sh /
 
-EXPOSE 5000 
-
-CMD ["sh", "./conf.sh"]
+CMD ["sh", "/conf_nginx.sh", "&"]

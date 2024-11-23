@@ -1,7 +1,12 @@
 FROM debian:bullseye
 
-RUN apt update
+RUN apt -y update && apt install -y \
+	php-fpm \
+	php-mysql \
+	curl
 
-COPY ./tools/conf.sh .
+COPY ./tools/conf_wordpress.sh /
+COPY ./conf/wp-config.php /
 
-CMD ["sh", "./conf.sh"]
+
+CMD ["sh", "/conf_wordpress.sh"]

@@ -1,21 +1,58 @@
 name:  inception
 
+networks:
+  inception:
+    name: inception
+
 services:
   nginx:
+    container_name: nginx
     build: ./requirements/nginx
-
-  mariadb:
-    build: ./requirements/mariadb
     volumes:
-      - DB:/home/pedromar/data
+      - WordPress:/var/www/html
+    networks:
+      - inception
+    ports:
+      - "443:443"
+    env_file:
+      - .env
+    depends_on:
+      - wordpress
+    restart: always
 
   wordpress:
+    container_name: wordpress
     build: ./requirements/wordpress
     volumes:
-      - WordPress:/home/pedromar/data
+      - WordPress:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/
+    volumes:
+      - DB:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
 
 volumes:
   DB:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/pedromar/data/DB
+      o: bind
+
   WordPress:
-
-
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/pedromar/data/WordPress
+      o: bind

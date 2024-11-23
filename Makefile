@@ -9,20 +9,19 @@ DOCKER_VOLUMES := $(shell docker volume ls -q)
 all: up
 
 up:
-	docker compose -f $(SRCS)/docker-compose.yml up
+	docker compose -f ./srcs/docker-compose.yml up
 
 down:
-	docker compose down
+	docker compose -f $(SRCS)/docker-compose.yml down
 
-logs:
-	docker compose logs
-
-ps:
-	docker compose ps
-
-clean:
+clean: down
 	@(docker stop $(DOCKER_CONTAINERS) || true; \
 	docker rm $(DOCKER_CONTAINERS) || true; \
 	docker rmi -f $(DOCKER_IMAGES) || true; \
 	docker volume rm $(DOCKER_VOLUMES) || true; \
 	docker network rm $(DOCKER_NETWORKS) || true;) 2>/dev/null
+
+fclean: clean
+	echo Y | docker system prune || true;
+
+re: fclean all
