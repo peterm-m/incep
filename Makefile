@@ -15,13 +15,14 @@ down:
 	docker compose -f $(SRCS)/docker-compose.yml down
 
 clean: down
-	@(docker stop $(DOCKER_CONTAINERS) || true; \
-	docker rm $(DOCKER_CONTAINERS) || true; \
-	docker rmi -f $(DOCKER_IMAGES) || true; \
-	docker volume rm $(DOCKER_VOLUMES) || true; \
-	docker network rm $(DOCKER_NETWORKS) || true;) 2>/dev/null
+	@(docker stop $(DOCKER_CONTAINERS) 2>/dev/null || true)
+	@(docker rm $(DOCKER_CONTAINERS) 2>/dev/nul || true)
+	@(docker rmi -f $(DOCKER_IMAGES) 2>/dev/null || true)
+	@(docker volume rm $(DOCKER_VOLUMES) 2>/dev/null || true)
+	@(docker network rm $(DOCKER_NETWORKS) 2>/dev/null || true)
+	@(echo Y | docker system prune 2>/dev/null || true)
 
 fclean: clean
-	echo Y | docker system prune || true;
+#	rm -rf /home/pedromar/data/mariadb/* /home/pedromar/data/wordpress/*
 
 re: fclean all
