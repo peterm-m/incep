@@ -1,8 +1,11 @@
 FROM debian:latest
 
 RUN apt -y update && apt -y upgrade && apt install -y \
- nginx
+ nginx \
+ openssl
 
-COPY default /etc/nginx/sites-available/.
+COPY conf/default /etc/nginx/sites-available/.
+COPY tools/script.sh .
 
-CMD ["nginx", "-g", "daemon off;"]
+RUN chmod +x script.sh
+CMD ["./script.sh"]

@@ -9,10 +9,13 @@ DOCKER_VOLUMES := $(shell docker volume ls -q)
 all: up
 
 up:
-	docker compose -f ./srcs/docker-compose.yml up
+	@docker compose -f ./srcs/docker-compose.yml up -d
 
 down:
-	docker compose -f $(SRCS)/docker-compose.yml down
+	@docker compose -f ./srcs/docker-compose.yml down
+
+start : 
+	@docker compose -f ./srcs/docker-compose.yml start
 
 clean: down
 	@(docker stop $(DOCKER_CONTAINERS) 2>/dev/null || true)
@@ -22,7 +25,8 @@ clean: down
 	@(docker network rm $(DOCKER_NETWORKS) 2>/dev/null || true)
 	@(echo Y | docker system prune 2>/dev/null || true)
 
-fclean: clean
-#	rm -rf /home/pedromar/data/mariadb/* /home/pedromar/data/wordpress/*
+status : 
+	@docker ps
 
-re: fclean all
+re: clean all
+
